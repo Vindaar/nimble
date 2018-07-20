@@ -636,6 +636,9 @@ proc listPaths(options: Options) =
       if nimbleFile.existsFile:
         var pkgInfo = getPkgInfo(path, options)
         var v: VersionAndPath
+        # here we know the package is installed and check if linked
+        pkgInfo.isInstalled = true
+        pkgInfo.isLinked = cmpPaths(nimbleFile.splitFile().dir, path) != 0
         v.version = newVersion(pkgInfo.specialVersion)
         v.path = pkgInfo.getRealDir()
         installed.add(v)
